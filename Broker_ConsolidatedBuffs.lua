@@ -5,7 +5,7 @@ local ldb = LibStub("LibDataBroker-1.1")
 
 local BrokerConsolidatedBuffs = ldb:NewDataObject("Broker_ConsolidatedBuffs", {
 	type = "data source",
-	text = "Please wait",
+	text = "0/0",
 	value = 1,
 	icon = "Interface\\AddOns\\Broker_ConsolidatedBuffs\\BuffConsolidation", -- I can't use the default because is a combination texture :(
 	label = "ConsolidatedBuffs",
