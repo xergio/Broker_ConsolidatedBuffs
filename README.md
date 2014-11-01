@@ -6,8 +6,10 @@ Simple :)
 
 ![Image](http://i.imgur.com/rhnlAk8.jpg)
 
-[Curse](http://www.curse.com/addons/wow/broker_consolidatedbuffs) - [CurseForge](http://wow.curseforge.com/addons/broker_consolidatedbuffs)
-[WoWInterface](http://www.wowinterface.com/downloads/info23247-Broker_ConsolidatedBuffs.html)
+## Links
+- [Curse](http://www.curse.com/addons/wow/broker_consolidatedbuffs) 
+- [CurseForge](http://wow.curseforge.com/addons/broker_consolidatedbuffs)
+- [WoWInterface](http://www.wowinterface.com/downloads/info23247-Broker_ConsolidatedBuffs.html)
 
 ## TODO
 - Change tooltip lib to LibQTip.
