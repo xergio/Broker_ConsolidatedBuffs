@@ -1,0 +1,17 @@
+﻿## Interface: 60300
+## Title: Broker_ConsolidatedBuffs
+## Notes: Track consolidated buffs
+## Author: Gio
+## Version: 0.1
+## SavedVariables: 
+
+libs\LibStub\LibStub.lua
+libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+libs\libdatabroker-1-1-1.1.4\LibDataBroker-1.1.lua
+
+Broker_ConsolidatedBuffs.lua
+
+# Resources:
+# http://www.curse.com/addons/wow/broker_raidbuffs (inspiration)
+# ElvUI modules/auras/consolidatedBuffs.lua
+# http://sethcoder.com/reference/wow/INTERFACE/BUTTONS/
