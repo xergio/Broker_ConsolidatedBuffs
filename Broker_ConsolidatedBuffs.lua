@@ -5,13 +5,13 @@ local ldb = LibStub("LibDataBroker-1.1")
 
 local BrokerConsolidatedBuffs = ldb:NewDataObject("Broker_ConsolidatedBuffs", {
 	type = "data source",
-	text = "0/0",
+	text = "0/"..NUM_LE_RAID_BUFF_TYPES,
 	value = 1,
 	icon = "Interface\\AddOns\\Broker_ConsolidatedBuffs\\BuffConsolidation", -- I can't use the default because is a combination texture :(
 	label = "ConsolidatedBuffs",
 
 	OnTooltipShow = function(tooltip)
-		tooltip:AddLine("Consolidated Buffs")
+		tooltip:AddLine(CONSOLIDATE_BUFFS_TEXT)
 		tooltip:AddLine(" ")
 
 		for i = 1, NUM_LE_RAID_BUFF_TYPES do
