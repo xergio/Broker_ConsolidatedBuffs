@@ -38,7 +38,15 @@ local BrokerConsolidatedBuffs = ldb:NewDataObject("Broker_ConsolidatedBuffs", {
 		end
 
 		if missing ~= "" then
-			SendChatMessage(ADDON_MISSING..": "..strsub(missing, 0, strlen(missing)-2), "SAY")
+			local channel = "SAY"
+			if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+				channel = "INSTANCE_CHAT"
+			elseif IsInRaid() then
+				channel = "RAID"
+			elseif IsInGroup() then
+				channel = "PARTY"
+			end
+			SendChatMessage(ADDON_MISSING..": "..strsub(missing, 0, strlen(missing)-2), channel)
 		end
 	end
 })
