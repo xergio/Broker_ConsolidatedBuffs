@@ -7,7 +7,7 @@ local BrokerConsolidatedBuffs = ldb:NewDataObject("Broker_ConsolidatedBuffs", {
 	type = "data source",
 	text = "Please wait",
 	value = 1,
-	icon = "Interface\\AddOns\\Broker_ConsolidatedBuffs\\BuffConsolidation",
+	icon = "Interface\\AddOns\\Broker_ConsolidatedBuffs\\BuffConsolidation", -- I can't use the default because is a combination texture :(
 	label = "ConsolidatedBuffs",
 
 	OnTooltipShow = function(tooltip)
