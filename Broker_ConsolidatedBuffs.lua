@@ -3,7 +3,7 @@ local addonName, addonNS = ...
 local ldb = LibStub("LibDataBroker-1.1")
 
 local defaults = {}
-defaults.statIcons = { -- thanks ElvUI/modules/auras/consolidatedBuffs.lua
+defaults.statIcons = { -- thanks ElvUI/modules/auras/consolidatedBuffs.lua, i'll change this in future versions
 	[1] = "Interface\\Icons\\Spell_Magic_GreaterBlessingofKings", -- Stats
 	[2] = "Interface\\Icons\\Spell_Holy_WordFortitude", -- Stamina
 	[3] = "Interface\\Icons\\INV_Misc_Horn_02", --Attack Power
@@ -17,10 +17,10 @@ defaults.statIcons = { -- thanks ElvUI/modules/auras/consolidatedBuffs.lua
 
 
 local BrokerConsolidatedBuffs = ldb:NewDataObject("Broker_ConsolidatedBuffs", {
-	type = "data source",
-	text = "0/"..NUM_LE_RAID_BUFF_TYPES,
-	value = 1,
-	icon = "Interface\\AddOns\\Broker_ConsolidatedBuffs\\BuffConsolidation", -- I can't use the default because is a combination texture :(
+	type  = "data source",
+	text  = "0/"..NUM_LE_RAID_BUFF_TYPES,
+	value = "0/"..NUM_LE_RAID_BUFF_TYPES,
+	icon  = "Interface\\AddOns\\Broker_ConsolidatedBuffs\\BuffConsolidation", -- I can't use the default because is a combination texture :(
 	label = "ConsolidatedBuffs",
 
 	OnTooltipShow = function(tooltip)
@@ -74,7 +74,8 @@ local function updateBuffs(self, event, unitID)
 			end
 		end
 		
-		BrokerConsolidatedBuffs.text = c.."/"..NUM_LE_RAID_BUFF_TYPES
+		BrokerConsolidatedBuffs.text  = c.."/"..NUM_LE_RAID_BUFF_TYPES
+		BrokerConsolidatedBuffs.value = c.."/"..NUM_LE_RAID_BUFF_TYPES -- for ElvUI datatexts
 	end
 end
 
