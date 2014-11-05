@@ -2,6 +2,19 @@
 local addonName, addonNS = ...
 local ldb = LibStub("LibDataBroker-1.1")
 
+local defaults = {}
+defaults.statIcons = { -- thanks ElvUI/modules/auras/consolidatedBuffs.lua
+	[1] = "Interface\\Icons\\Spell_Magic_GreaterBlessingofKings", -- Stats
+	[2] = "Interface\\Icons\\Spell_Holy_WordFortitude", -- Stamina
+	[3] = "Interface\\Icons\\INV_Misc_Horn_02", --Attack Power
+	[4] = "Interface\\Icons\\INV_Helmet_08", --Haste
+	[5] = "Interface\\Icons\\Spell_Holy_MagicalSentry", --Spell Power
+	[6] = "Interface\\Icons\\ability_monk_prideofthetiger", -- Critical Strike
+	[7] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofKings", --Mastery
+	[8] = "Interface\\Icons\\spell_warlock_focusshadow", --Multistrike
+	[9] = "Interface\\Icons\\Spell_Holy_MindVision" --Versatility
+}
+
 
 local BrokerConsolidatedBuffs = ldb:NewDataObject("Broker_ConsolidatedBuffs", {
 	type = "data source",
@@ -24,7 +37,7 @@ local BrokerConsolidatedBuffs = ldb:NewDataObject("Broker_ConsolidatedBuffs", {
 				r, g, b = 1, 0, 0
 			end
 
-			tooltip:AddLine(_G["RAID_BUFF_"..i], r, g, b)
+			tooltip:AddLine("\124T"..defaults.statIcons[i]..":0\124t ".._G["RAID_BUFF_"..i], r, g, b)
 		end
 	end,
 

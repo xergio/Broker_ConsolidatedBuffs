@@ -14,3 +14,4 @@ Simple :)
 ## TODO
 - Change tooltip lib to LibQTip.
 - To show more info about missing buffs.
+- Workaround for ElvUI datatexts :/
