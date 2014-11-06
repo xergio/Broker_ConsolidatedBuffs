@@ -2,18 +2,58 @@
 local addonName, addonNS = ...
 local ldb = LibStub("LibDataBroker-1.1")
 
-local defaults = {}
-defaults.statIcons = { -- thanks ElvUI/modules/auras/consolidatedBuffs.lua, i'll change this in future versions
-	[1] = "Interface\\Icons\\Spell_Magic_GreaterBlessingofKings", -- Stats
-	[2] = "Interface\\Icons\\Spell_Holy_WordFortitude", -- Stamina
-	[3] = "Interface\\Icons\\INV_Misc_Horn_02", --Attack Power
-	[4] = "Interface\\Icons\\INV_Helmet_08", --Haste
-	[5] = "Interface\\Icons\\Spell_Holy_MagicalSentry", --Spell Power
-	[6] = "Interface\\Icons\\ability_monk_prideofthetiger", -- Critical Strike
-	[7] = "Interface\\Icons\\Spell_Holy_GreaterBlessingofKings", --Mastery
-	[8] = "Interface\\Icons\\spell_warlock_focusshadow", --Multistrike
-	[9] = "Interface\\Icons\\Spell_Holy_MindVision" --Versatility
+local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
+	[1] = { -- Stats
+		[1] = "Interface\\Icons\\spell_nature_regeneration",
+		[2] = {"DRUID", "MONK", "PALADIN"}
+	},
+	[2] = { -- Stamina
+		[1] = "Interface\\Icons\\spell_holy_wordfortitude",
+		[2] = {"WARRIOR", "PRIEST", "WARLOCK"}
+	},
+	[3] = { --Attack Power
+		[1] = "Interface\\Icons\\ability_warrior_battleshout",
+		[2] = {"DEATHKNIGHT", "WARRIOR", "HUNTER"}
+	},
+	[4] = { --Haste
+		[1] = "Interface\\Icons\\spell_nature_bloodlust",
+		[2] = {"DEATHKNIGHT", "ROGUE", "PRIEST", "SHAMAN"}
+	},
+	[5] = { --Spell Power
+		[1] = "Interface\\Icons\\spell_holy_magicalsentry",
+		[2] = {"MAGE", "WARLOCK"}
+	},
+	[6] = { -- Critical Strike
+		[1] = "Interface\\Icons\\spell_nature_unyeildingstamina",
+		[2] = {"MAGE", "DRUID", "MONK"}
+	},
+	[7] = { --Mastery
+		[1] = "Interface\\Icons\\spell_holy_greaterblessingofkings",
+		[2] = {"DEATHKNIGHT", "SHAMAN", "DRUID", "PALADIN"}
+	},
+	[8] = { --Multistrike
+		[1] = "Interface\\Icons\\inv_elemental_mote_air01",
+		[2] = {"ROGUE", "PRIEST", "WARLOCK", "MONK"}
+	},
+	[9] = { --Versatility
+		[1] = "Interface\\Icons\\spell_holy_mindvision",
+		[2] = {"DEATHKNIGHT", "WARRIOR", "DRUID", "PALADIN"}
+	}
 }
+classes_raw = {}
+local classes = {}
+FillLocalizedClassList(classes_raw)
+for token, localizedName in pairs(classes_raw) do
+	local color = RAID_CLASS_COLORS[token];
+	classes[token] = {
+		["name"]  = localizedName,
+		["color"] = color.colorStr
+	}
+end
+
+local function classColorLocalized(token)
+	return "\124c".. classes[token]["color"]..classes[token]["name"].."\124r"
+end
 
 
 local BrokerConsolidatedBuffs = ldb:NewDataObject("Broker_ConsolidatedBuffs", {
@@ -29,15 +69,22 @@ local BrokerConsolidatedBuffs = ldb:NewDataObject("Broker_ConsolidatedBuffs", {
 
 		for i = 1, NUM_LE_RAID_BUFF_TYPES do
 			local name, rank, texture, duration, expiration, spellId, slot = GetRaidBuffTrayAuraInfo(i)
-			local r, g, b
+			local c
 
 			if name then
-				r, g, b = 0, 1, 0
+				c = "FF00FF00"
 			else
-				r, g, b = 1, 0, 0
+				c = "FFFF0000"
 			end
 
-			tooltip:AddLine("\124T"..defaults.statIcons[i]..":0\124t ".._G["RAID_BUFF_"..i], r, g, b)
+
+			local list = classColorLocalized(defaults[i][2][1])
+			for ii = 2, #defaults[i][2] do
+				list = list ..", ".. classColorLocalized(defaults[i][2][ii])
+			end
+			tooltip:AddDoubleLine("\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i].."\124r", list)
+			--tooltip:AddLine("\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i].."\124r  "..list)
+			--tooltip:AddLine("     "..list)
 		end
 	end,
 
