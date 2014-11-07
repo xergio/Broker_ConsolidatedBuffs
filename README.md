@@ -4,7 +4,7 @@ Track your consolidated buffs and show it in a Broker Display like Chocolate Bar
 
 Simple :)
 
-![Image](http://i.imgur.com/rhnlAk8.jpg)
+![Image](http://i.imgur.com/aeJy3zl.png)
 
 ## Links
 - [Curse](http://www.curse.com/addons/wow/broker_consolidatedbuffs) 
