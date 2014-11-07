@@ -8,6 +8,8 @@
 libs\LibStub\LibStub.lua
 libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
 libs\libdatabroker-1-1-1.1.4\LibDataBroker-1.1.lua
+libs\LibBabble-TalentTree-3.0\lib.xml
+libs\LibBabble-CreatureType-3.0\lib.xml
 
 Broker_ConsolidatedBuffs.lua
 
@@ -15,3 +17,5 @@ Broker_ConsolidatedBuffs.lua
 # http://www.curse.com/addons/wow/broker_raidbuffs (inspiration)
 # ElvUI modules/auras/consolidatedBuffs.lua
 # http://sethcoder.com/reference/wow/INTERFACE/BUTTONS/
+# http://www.curse.com/addons/wow/libbabble-talenttree-3-0
+# http://www.curse.com/addons/wow/libbabble-creaturetype-3-0

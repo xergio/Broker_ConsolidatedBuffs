@@ -1,62 +1,103 @@
 
 local addonName, addonNS = ...
-local ldb = LibStub("LibDataBroker-1.1")
+local LDB = LibStub("LibDataBroker-1.1")
+local LTT = LibStub("LibBabble-TalentTree-3.0"):GetLookupTable()
+local LCT = LibStub("LibBabble-CreatureType-3.0"):GetLookupTable()
+local LC  = {} -- LOCALE CLASSES
+local CC  = {} -- CLASS COLOR
+
+local classes_raw = {} -- conversion only
+FillLocalizedClassList(classes_raw)
+for token, localizedName in pairs(classes_raw) do
+	local color = RAID_CLASS_COLORS[token];
+	LC[token] = localizedName
+	CC[token] = color.colorStr
+end
 
 local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 	[1] = { -- Stats
 		[1] = "Interface\\Icons\\spell_nature_regeneration",
-		[2] = {"DRUID", "MONK", "PALADIN"}
+		[2] = {
+			{LC["DRUID"], CC["DRUID"]}, 
+			{LC["MONK"], CC["MONK"]}, 
+			{LC["PALADIN"], CC["PALADIN"]}
+		}
 	},
 	[2] = { -- Stamina
 		[1] = "Interface\\Icons\\spell_holy_wordfortitude",
-		[2] = {"WARRIOR", "PRIEST", "WARLOCK"}
+		[2] = {
+			{LC["WARRIOR"], CC["WARRIOR"]}, 
+			{LC["PRIEST"], CC["PRIEST"]}, 
+			{LC["WARLOCK"], CC["WARLOCK"]}
+		}
 	},
 	[3] = { --Attack Power
 		[1] = "Interface\\Icons\\ability_warrior_battleshout",
-		[2] = {"DEATHKNIGHT", "WARRIOR", "HUNTER"}
+		[2] = {
+			{LC["DEATHKNIGHT"], CC["DEATHKNIGHT"]}, 
+			{LC["WARRIOR"], CC["WARRIOR"]}, 
+			{LC["HUNTER"], CC["HUNTER"]}
+		}
 	},
 	[4] = { --Haste
 		[1] = "Interface\\Icons\\spell_nature_bloodlust",
-		[2] = {"DEATHKNIGHT", "ROGUE", "PRIEST", "SHAMAN"}
+		[2] = {
+			{LC["DEATHKNIGHT"].." "..STAT_DPS_SHORT, CC["DEATHKNIGHT"]}, 
+			{LC["ROGUE"], CC["ROGUE"]}, 
+			{LC["PRIEST"].." "..LTT["Shadow"], CC["PRIEST"]}, 
+			{LC["SHAMAN"], CC["SHAMAN"]}
+		}
 	},
 	[5] = { --Spell Power
 		[1] = "Interface\\Icons\\spell_holy_magicalsentry",
-		[2] = {"MAGE", "WARLOCK"}
+		[2] = {
+			{LC["MAGE"], CC["MAGE"]}, 
+			{LC["WARLOCK"], CC["WARLOCK"]}
+		}
 	},
 	[6] = { -- Critical Strike
 		[1] = "Interface\\Icons\\spell_nature_unyeildingstamina",
-		[2] = {"MAGE", "DRUID", "MONK"}
+		[2] = {
+			{LC["MAGE"], CC["MAGE"]}, 
+			{LC["DRUID"].." "..LTT["Feral"], CC["DRUID"]}, 
+			{LC["MONK"].." "..STAT_CATEGORY_MELEE, CC["MONK"]}
+		}
 	},
 	[7] = { --Mastery
 		[1] = "Interface\\Icons\\spell_holy_greaterblessingofkings",
-		[2] = {"DEATHKNIGHT", "SHAMAN", "DRUID", "PALADIN"}
+		[2] = {
+			{LC["DEATHKNIGHT"].." "..LTT["Blood"], CC["DEATHKNIGHT"]}, 
+			{LC["SHAMAN"], CC["SHAMAN"]}, 
+			{LC["DRUID"].." "..LTT["Balance"], CC["DRUID"]}, 
+			{LC["PALADIN"], CC["PALADIN"]}
+		}
 	},
 	[8] = { --Multistrike
 		[1] = "Interface\\Icons\\inv_elemental_mote_air01",
-		[2] = {"ROGUE", "PRIEST", "WARLOCK", "MONK"}
+		[2] = {
+			{LC["ROGUE"], CC["ROGUE"]}, 
+			{LC["PRIEST"].." "..LTT["Shadow"], CC["PRIEST"]}, 
+			{LC["WARLOCK"], CC["WARLOCK"]}, 
+			{LC["MONK"].." "..STAT_DPS_SHORT, CC["MONK"]}
+		}
 	},
 	[9] = { --Versatility
 		[1] = "Interface\\Icons\\spell_holy_mindvision",
-		[2] = {"DEATHKNIGHT", "WARRIOR", "DRUID", "PALADIN"}
+		[2] = {
+			{LC["DEATHKNIGHT"].." "..STAT_DPS_SHORT, CC["DEATHKNIGHT"]}, 
+			{LC["WARRIOR"].." "..STAT_DPS_SHORT, CC["WARRIOR"]},
+			{LC["DRUID"], CC["DRUID"]}, 
+			{LC["PALADIN"].." "..STAT_DPS_SHORT, CC["PALADIN"]}
+		}
 	}
 }
-classes_raw = {}
-local classes = {}
-FillLocalizedClassList(classes_raw)
-for token, localizedName in pairs(classes_raw) do
-	local color = RAID_CLASS_COLORS[token];
-	classes[token] = {
-		["name"]  = localizedName,
-		["color"] = color.colorStr
-	}
-end
 
-local function classColorLocalized(token)
-	return "\124c".. classes[token]["color"]..classes[token]["name"].."\124r"
+local function classColorLocalized(color, spec)
+	return "\124c".. color..spec.."\124r"
 end
 
 
-local BrokerConsolidatedBuffs = ldb:NewDataObject("Broker_ConsolidatedBuffs", {
+local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 	type  = "data source",
 	text  = "0/"..NUM_LE_RAID_BUFF_TYPES,
 	value = "0/"..NUM_LE_RAID_BUFF_TYPES,
@@ -78,11 +119,11 @@ local BrokerConsolidatedBuffs = ldb:NewDataObject("Broker_ConsolidatedBuffs", {
 			end
 
 
-			local list = classColorLocalized(defaults[i][2][1])
-			for ii = 2, #defaults[i][2] do
-				list = list ..", ".. classColorLocalized(defaults[i][2][ii])
+			local classes = ""
+			for ii = 1, #defaults[i][2] do
+				classes = classes ..", ".. classColorLocalized(defaults[i][2][ii][2], defaults[i][2][ii][1])
 			end
-			tooltip:AddDoubleLine("\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i].."\124r", list)
+			tooltip:AddDoubleLine("\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i].."\124r", strsub(classes, 2))
 			--tooltip:AddLine("\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i].."\124r  "..list)
 			--tooltip:AddLine("     "..list)
 		end

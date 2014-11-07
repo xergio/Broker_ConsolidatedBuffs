@@ -1,0 +1,26 @@
+------------------------------------------------------------------------
+r144 | nevcairiel | 2014-11-02 10:31:31 +0000 (Sun, 02 Nov 2014) | 1 line
+Changed paths:
+   A /tags/6.0-release3 (from /trunk:143)
+
+Weekly Tag - #3
+------------------------------------------------------------------------
+r143 | nevcairiel | 2014-11-02 10:31:00 +0000 (Sun, 02 Nov 2014) | 1 line
+Changed paths:
+   M /trunk/LibBabble-CreatureType-3.0.lua
+
+Automated LibBabble re-generation from the localization system
+------------------------------------------------------------------------
+r141 | nevcairiel | 2014-10-23 11:52:30 +0000 (Thu, 23 Oct 2014) | 1 line
+Changed paths:
+   M /trunk/LibBabble-CreatureType-3.0.lua
+
+Automated LibBabble re-generation from the localization system
+------------------------------------------------------------------------
+r139 | nevcairiel | 2014-10-14 19:01:14 +0000 (Tue, 14 Oct 2014) | 1 line
+Changed paths:
+   M /trunk/LibBabble-CreatureType-3.0.lua
+   M /trunk/LibBabble-CreatureType-3.0.toc
+
+Update for 6.0
+------------------------------------------------------------------------
