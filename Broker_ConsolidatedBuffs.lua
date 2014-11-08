@@ -21,7 +21,8 @@ local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 			{LC["DRUID"], CC["DRUID"]}, 
 			{LC["MONK"], CC["MONK"]}, 
 			{LC["PALADIN"], CC["PALADIN"]}
-		}
+		},
+		[3] = {LCT["Dog"], LCT["Gorilla"], LCT["Shale Spider"], LCT["Worm"]}
 	},
 	[2] = { -- Stamina
 		[1] = "Interface\\Icons\\spell_holy_wordfortitude",
@@ -29,7 +30,8 @@ local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 			{LC["WARRIOR"], CC["WARRIOR"]}, 
 			{LC["PRIEST"], CC["PRIEST"]}, 
 			{LC["WARLOCK"], CC["WARLOCK"]}
-		}
+		},
+		[3] = {LCT["Bear"], LCT["Goat"], LCT["Rylak"], LCT["Silithid"]}
 	},
 	[3] = { --Attack Power
 		[1] = "Interface\\Icons\\ability_warrior_battleshout",
@@ -37,7 +39,8 @@ local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 			{LC["DEATHKNIGHT"], CC["DEATHKNIGHT"]}, 
 			{LC["WARRIOR"], CC["WARRIOR"]}, 
 			{LC["HUNTER"], CC["HUNTER"]}
-		}
+		},
+		[3] = {}
 	},
 	[4] = { --Haste
 		[1] = "Interface\\Icons\\spell_nature_bloodlust",
@@ -46,14 +49,16 @@ local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 			{LC["ROGUE"], CC["ROGUE"]}, 
 			{LC["PRIEST"].." "..LTT["Shadow"], CC["PRIEST"]}, 
 			{LC["SHAMAN"], CC["SHAMAN"]}
-		}
+		},
+		[3] = {LCT["Hyena"], LCT["Rylak"], LCT["Sporebat"], LCT["Wasp"]}
 	},
 	[5] = { --Spell Power
 		[1] = "Interface\\Icons\\spell_holy_magicalsentry",
 		[2] = {
 			{LC["MAGE"], CC["MAGE"]}, 
 			{LC["WARLOCK"], CC["WARLOCK"]}
-		}
+		},
+		[3] = {LCT["Serpent"], LCT["Silithid"], LCT["Water Strider"]}
 	},
 	[6] = { -- Critical Strike
 		[1] = "Interface\\Icons\\spell_nature_unyeildingstamina",
@@ -61,7 +66,8 @@ local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 			{LC["MAGE"], CC["MAGE"]}, 
 			{LC["DRUID"].." "..LTT["Feral"], CC["DRUID"]}, 
 			{LC["MONK"].." "..STAT_CATEGORY_MELEE, CC["MONK"]}
-		}
+		},
+		[3] = {LCT["Devilsaur"], LCT["Quilen"], LCT["Raptor"], LCT["Shale Spider"], LCT["Water Strider"], LCT["Wolf"]}
 	},
 	[7] = { --Mastery
 		[1] = "Interface\\Icons\\spell_holy_greaterblessingofkings",
@@ -70,7 +76,8 @@ local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 			{LC["SHAMAN"], CC["SHAMAN"]}, 
 			{LC["DRUID"].." "..LTT["Balance"], CC["DRUID"]}, 
 			{LC["PALADIN"], CC["PALADIN"]}
-		}
+		},
+		[3] = {LCT["Cat"], LCT["Hydra"], LCT["Spirit Beast"], LCT["Tallstrider"]}
 	},
 	[8] = { --Multistrike
 		[1] = "Interface\\Icons\\inv_elemental_mote_air01",
@@ -79,7 +86,8 @@ local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 			{LC["PRIEST"].." "..LTT["Shadow"], CC["PRIEST"]}, 
 			{LC["WARLOCK"], CC["WARLOCK"]}, 
 			{LC["MONK"].." "..STAT_DPS_SHORT, CC["MONK"]}
-		}
+		},
+		[3] = {LCT["Bat"], LCT["Clefthoof"], LCT["Core Hound"], LCT["Dragonhawk"], LCT["Wind Serpent"]}
 	},
 	[9] = { --Versatility
 		[1] = "Interface\\Icons\\spell_holy_mindvision",
@@ -88,7 +96,8 @@ local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 			{LC["WARRIOR"].." "..STAT_DPS_SHORT, CC["WARRIOR"]},
 			{LC["DRUID"], CC["DRUID"]}, 
 			{LC["PALADIN"].." "..STAT_DPS_SHORT, CC["PALADIN"]}
-		}
+		},
+		[3] = {LCT["Bird of Prey"], LCT["Boar"], LCT["Clefthoof"], LCT["Porcupine"], LCT["Ravager"], LCT["Stag"], LCT["Worm"]}
 	}
 }
 
@@ -118,12 +127,18 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 				c = "FFFF0000"
 			end
 
-
 			local classes = ""
 			for ii = 1, #defaults[i][2] do
 				classes = classes ..", ".. classColorLocalized(defaults[i][2][ii][2], defaults[i][2][ii][1])
 			end
+			local pets = ""
+			for ii = 1, #defaults[i][3] do
+				pets = pets ..", ".. defaults[i][3][ii]
+			end
 			tooltip:AddDoubleLine("\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i].."\124r", strsub(classes, 2))
+			tooltip:AddDoubleLine(" ", strsub(pets, 2))
+			--tooltip:AddLine(" ")
+
 			--tooltip:AddLine("\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i].."\124r  "..list)
 			--tooltip:AddLine("     "..list)
 		end
