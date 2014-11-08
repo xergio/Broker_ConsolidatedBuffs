@@ -10,6 +10,7 @@ libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
 libs\libdatabroker-1-1-1.1.4\LibDataBroker-1.1.lua
 libs\LibBabble-TalentTree-3.0\lib.xml
 libs\LibBabble-CreatureType-3.0\lib.xml
+libs\LibQTip-1.0\LibQTip-1.0.lua
 
 Broker_ConsolidatedBuffs.lua
 

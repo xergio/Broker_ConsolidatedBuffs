@@ -1,5 +1,6 @@
 
 local addonName, addonNS = ...
+local LQT = LibStub('LibQTip-1.0')
 local LDB = LibStub("LibDataBroker-1.1")
 local LTT = LibStub("LibBabble-TalentTree-3.0"):GetLookupTable()
 local LCT = LibStub("LibBabble-CreatureType-3.0"):GetLookupTable()
@@ -113,9 +114,15 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 	icon  = "Interface\\AddOns\\Broker_ConsolidatedBuffs\\BuffConsolidation", -- I can't use the default because is a combination texture :(
 	label = "ConsolidatedBuffs",
 
-	OnTooltipShow = function(tooltip)
-		tooltip:AddLine(CONSOLIDATE_BUFFS_TEXT)
+	OnEnter = function(self)
+		local tooltip = LQT:Acquire("Broker_ConsolidatedBuffsTooltip", 3, "LEFT", "LEFT", "LEFT")
+		self.tooltip  = tooltip
+
+		tooltip:AddHeader(CONSOLIDATE_BUFFS_TEXT)
 		tooltip:AddLine(" ")
+		tooltip:AddHeader(STATISTICS, ALL_CLASSES, PETS)--CONSOLIDATE_BUFFS_TEXT)
+		tooltip:AddSeparator()
+		--tooltip:AddLine(" ")
 
 		for i = 1, NUM_LE_RAID_BUFF_TYPES do
 			local name, rank, texture, duration, expiration, spellId, slot = GetRaidBuffTrayAuraInfo(i)
@@ -135,13 +142,24 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 			for ii = 1, #defaults[i][3] do
 				pets = pets ..", ".. defaults[i][3][ii]
 			end
-			tooltip:AddDoubleLine("\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i].."\124r", strsub(classes, 2))
-			tooltip:AddDoubleLine(" ", strsub(pets, 2))
+			tooltip:AddLine(
+				"\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i].."\124r", 
+				strsub(classes, 2),
+				strsub(pets, 2)
+			)
 			--tooltip:AddLine(" ")
 
 			--tooltip:AddLine("\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i].."\124r  "..list)
 			--tooltip:AddLine("     "..list)
 		end
+
+		tooltip:SmartAnchorTo(self)
+		tooltip:Show()
+	end,
+
+	OnLeave = function(self)
+		LQT:Release(self.tooltip)
+		self.tooltip = nil
 	end,
 
 	OnClick = function(button)
