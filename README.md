@@ -12,6 +12,6 @@ Simple :)
 - [WoWInterface](http://www.wowinterface.com/downloads/info23247-Broker_ConsolidatedBuffs.html)
 
 ## TODO
-- Change tooltip lib to LibQTip.
-- To show more info about missing buffs.
-- Workaround for ElvUI datatexts :/
+- (DONE) Change tooltip lib to LibQTip.
+- (DONE) To show more info about missing buffs.
+- (DONE) Workaround for ElvUI datatexts :/
