@@ -19,8 +19,8 @@ local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 	[1] = { -- Stats
 		[1] = "Interface\\Icons\\spell_nature_regeneration",
 		[2] = {
-			{LC["DRUID"], CC["DRUID"]}, 
-			{LC["MONK"], CC["MONK"]}, 
+			{LC["DRUID"], CC["DRUID"]},
+			{LC["MONK"], CC["MONK"]},
 			{LC["PALADIN"], CC["PALADIN"]}
 		},
 		[3] = {LCT["Dog"], LCT["Gorilla"], LCT["Shale Spider"], LCT["Worm"]}
@@ -28,8 +28,8 @@ local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 	[2] = { -- Stamina
 		[1] = "Interface\\Icons\\spell_holy_wordfortitude",
 		[2] = {
-			{LC["WARRIOR"], CC["WARRIOR"]}, 
-			{LC["PRIEST"], CC["PRIEST"]}, 
+			{LC["WARRIOR"], CC["WARRIOR"]},
+			{LC["PRIEST"], CC["PRIEST"]},
 			{LC["WARLOCK"], CC["WARLOCK"]}
 		},
 		[3] = {LCT["Bear"], LCT["Goat"], LCT["Rylak"], LCT["Silithid"]}
@@ -37,8 +37,8 @@ local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 	[3] = { --Attack Power
 		[1] = "Interface\\Icons\\ability_warrior_battleshout",
 		[2] = {
-			{LC["DEATHKNIGHT"], CC["DEATHKNIGHT"]}, 
-			{LC["WARRIOR"], CC["WARRIOR"]}, 
+			{LC["DEATHKNIGHT"], CC["DEATHKNIGHT"]},
+			{LC["WARRIOR"], CC["WARRIOR"]},
 			{LC["HUNTER"], CC["HUNTER"]}
 		},
 		[3] = {}
@@ -46,9 +46,9 @@ local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 	[4] = { --Haste
 		[1] = "Interface\\Icons\\spell_nature_bloodlust",
 		[2] = {
-			{LC["DEATHKNIGHT"].." "..STAT_DPS_SHORT, CC["DEATHKNIGHT"]}, 
-			{LC["ROGUE"], CC["ROGUE"]}, 
-			{LC["PRIEST"].." "..LTT["Shadow"], CC["PRIEST"]}, 
+			{LC["DEATHKNIGHT"].." "..STAT_DPS_SHORT, CC["DEATHKNIGHT"]},
+			{LC["ROGUE"], CC["ROGUE"]},
+			{LC["PRIEST"].." "..LTT["Shadow"], CC["PRIEST"]},
 			{LC["SHAMAN"], CC["SHAMAN"]}
 		},
 		[3] = {LCT["Hyena"], LCT["Rylak"], LCT["Sporebat"], LCT["Wasp"]}
@@ -56,7 +56,7 @@ local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 	[5] = { --Spell Power
 		[1] = "Interface\\Icons\\spell_holy_magicalsentry",
 		[2] = {
-			{LC["MAGE"], CC["MAGE"]}, 
+			{LC["MAGE"], CC["MAGE"]},
 			{LC["WARLOCK"], CC["WARLOCK"]}
 		},
 		[3] = {LCT["Serpent"], LCT["Silithid"], LCT["Water Strider"]}
@@ -64,8 +64,8 @@ local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 	[6] = { -- Critical Strike
 		[1] = "Interface\\Icons\\spell_nature_unyeildingstamina",
 		[2] = {
-			{LC["MAGE"], CC["MAGE"]}, 
-			{LC["DRUID"].." "..LTT["Feral"], CC["DRUID"]}, 
+			{LC["MAGE"], CC["MAGE"]},
+			{LC["DRUID"].." "..LTT["Feral"], CC["DRUID"]},
 			{LC["MONK"].." "..STAT_CATEGORY_MELEE, CC["MONK"]}
 		},
 		[3] = {LCT["Devilsaur"], LCT["Quilen"], LCT["Raptor"], LCT["Shale Spider"], LCT["Water Strider"], LCT["Wolf"]}
@@ -73,9 +73,9 @@ local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 	[7] = { --Mastery
 		[1] = "Interface\\Icons\\spell_holy_greaterblessingofkings",
 		[2] = {
-			{LC["DEATHKNIGHT"].." "..LTT["Blood"], CC["DEATHKNIGHT"]}, 
-			{LC["SHAMAN"], CC["SHAMAN"]}, 
-			{LC["DRUID"].." "..LTT["Balance"], CC["DRUID"]}, 
+			{LC["DEATHKNIGHT"].." "..LTT["Blood"], CC["DEATHKNIGHT"]},
+			{LC["SHAMAN"], CC["SHAMAN"]},
+			{LC["DRUID"].." "..LTT["Balance"], CC["DRUID"]},
 			{LC["PALADIN"], CC["PALADIN"]}
 		},
 		[3] = {LCT["Cat"], LCT["Hydra"], LCT["Spirit Beast"], LCT["Tallstrider"]}
@@ -83,9 +83,9 @@ local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 	[8] = { --Multistrike
 		[1] = "Interface\\Icons\\inv_elemental_mote_air01",
 		[2] = {
-			{LC["ROGUE"], CC["ROGUE"]}, 
-			{LC["PRIEST"].." "..LTT["Shadow"], CC["PRIEST"]}, 
-			{LC["WARLOCK"], CC["WARLOCK"]}, 
+			{LC["ROGUE"], CC["ROGUE"]},
+			{LC["PRIEST"].." "..LTT["Shadow"], CC["PRIEST"]},
+			{LC["WARLOCK"], CC["WARLOCK"]},
 			{LC["MONK"].." "..STAT_DPS_SHORT, CC["MONK"]}
 		},
 		[3] = {LCT["Bat"], LCT["Clefthoof"], LCT["Core Hound"], LCT["Dragonhawk"], LCT["Wind Serpent"]}
@@ -93,9 +93,9 @@ local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 	[9] = { --Versatility
 		[1] = "Interface\\Icons\\spell_holy_mindvision",
 		[2] = {
-			{LC["DEATHKNIGHT"].." "..STAT_DPS_SHORT, CC["DEATHKNIGHT"]}, 
+			{LC["DEATHKNIGHT"].." "..STAT_DPS_SHORT, CC["DEATHKNIGHT"]},
 			{LC["WARRIOR"].." "..STAT_DPS_SHORT, CC["WARRIOR"]},
-			{LC["DRUID"], CC["DRUID"]}, 
+			{LC["DRUID"], CC["DRUID"]},
 			{LC["PALADIN"].." "..STAT_DPS_SHORT, CC["PALADIN"]}
 		},
 		[3] = {LCT["Bird of Prey"], LCT["Boar"], LCT["Clefthoof"], LCT["Porcupine"], LCT["Ravager"], LCT["Stag"], LCT["Worm"]}
@@ -124,6 +124,8 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 		tooltip:AddSeparator()
 		--tooltip:AddLine(" ")
 
+		local buffmask = GetRaidBuffInfo() or 0
+		local mask = 1
 		for i = 1, NUM_LE_RAID_BUFF_TYPES do
 			local name, rank, texture, duration, expiration, spellId, slot = GetRaidBuffTrayAuraInfo(i)
 			local c
@@ -131,7 +133,11 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 			if name then
 				c = "FF00FF00"
 			else
-				c = "FFFF0000"
+				if bit.band(buffmask, mask) > 0 then
+					c = "FFFF0000"
+				else
+					c = "FF888888"
+				end
 			end
 
 			local classes = ""
@@ -143,7 +149,7 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 				pets = pets ..", ".. defaults[i][3][ii]
 			end
 			tooltip:AddLine(
-				"\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i].."\124r", 
+				"\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i].."\124r",
 				strsub(classes, 2),
 				strsub(pets, 2)
 			)
@@ -151,6 +157,8 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 
 			--tooltip:AddLine("\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i].."\124r  "..list)
 			--tooltip:AddLine("     "..list)
+
+			mask = bit.lshift(mask, 1)
 		end
 
 		tooltip:SmartAnchorTo(self)
@@ -164,11 +172,14 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 
 	OnClick = function(button)
 		local missing = ""
+		local buffmask = GetRaidBuffInfo() or 0
+		local mask = 1
 
 		for i = 1, NUM_LE_RAID_BUFF_TYPES do
-			if not GetRaidBuffTrayAuraInfo(i) then
+			if not GetRaidBuffTrayAuraInfo(i) and bit.band(buffmask, mask) > 0 then
 				missing = missing .. _G["RAID_BUFF_"..i] ..", "
 			end
+			mask = bit.lshift(mask, 1)
 		end
 
 		if missing ~= "" then
@@ -194,9 +205,11 @@ local function updateBuffs(self, event, unitID)
 				c = c + 1
 			end
 		end
-		
-		BrokerConsolidatedBuffs.text  = c.."/"..NUM_LE_RAID_BUFF_TYPES
-		BrokerConsolidatedBuffs.value = c.."/"..NUM_LE_RAID_BUFF_TYPES -- for ElvUI datatexts
+
+		local buffcount = select(2, GetRaidBuffInfo())
+
+		BrokerConsolidatedBuffs.text  = c.."/"..max(c, buffcount)
+		BrokerConsolidatedBuffs.value = c.."/"..max(c, buffcount) -- for ElvUI datatexts
 	end
 end
 
