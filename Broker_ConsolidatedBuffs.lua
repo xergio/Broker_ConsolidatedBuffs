@@ -149,13 +149,13 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 				pets = pets ..", ".. defaults[i][3][ii]
 			end
 			tooltip:AddLine(
-				"\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i].."\124r",
+				"\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i]:gsub("-\n", "").."\124r",
 				strsub(classes, 2),
 				strsub(pets, 2)
 			)
 			--tooltip:AddLine(" ")
 
-			--tooltip:AddLine("\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i].."\124r  "..list)
+			--tooltip:AddLine("\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i]:gsub("-\n", "").."\124r  "..list)
 			--tooltip:AddLine("     "..list)
 
 			mask = bit.lshift(mask, 1)
@@ -177,7 +177,7 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 
 		for i = 1, NUM_LE_RAID_BUFF_TYPES do
 			if not GetRaidBuffTrayAuraInfo(i) and bit.band(buffmask, mask) > 0 then
-				missing = missing .. _G["RAID_BUFF_"..i] ..", "
+				missing = missing .. _G["RAID_BUFF_"..i]:gsub("-\n", "") ..", "
 			end
 			mask = bit.lshift(mask, 1)
 		end
