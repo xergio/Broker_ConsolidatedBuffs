@@ -1,4 +1,8 @@
 
+-- Upvalues
+local _G = _G
+local bit, strsub, strlen, select, max = bit, strsub, strlen, select, max
+
 local addonName, addonNS = ...
 local LQT = LibStub('LibQTip-1.0')
 local LDB = LibStub("LibDataBroker-1.1")
@@ -109,8 +113,8 @@ end
 
 local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 	type  = "data source",
-	text  = "0/"..NUM_LE_RAID_BUFF_TYPES,
-	value = "0/"..NUM_LE_RAID_BUFF_TYPES,
+	text  = "0/".._G.NUM_LE_RAID_BUFF_TYPES,
+	value = "0/".._G.NUM_LE_RAID_BUFF_TYPES,
 	icon  = "Interface\\AddOns\\Broker_ConsolidatedBuffs\\BuffConsolidation", -- I can't use the default because is a combination texture :(
 	label = "ConsolidatedBuffs",
 
@@ -118,16 +122,16 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 		local tooltip = LQT:Acquire("Broker_ConsolidatedBuffsTooltip", 3, "LEFT", "LEFT", "LEFT")
 		self.tooltip  = tooltip
 
-		tooltip:AddHeader(CONSOLIDATE_BUFFS_TEXT)
+		tooltip:AddHeader(_G.CONSOLIDATE_BUFFS_TEXT)
 		tooltip:AddLine(" ")
-		tooltip:AddHeader(STATISTICS, ALL_CLASSES, PETS)--CONSOLIDATE_BUFFS_TEXT)
+		tooltip:AddHeader(_G.STATISTICS, _G.ALL_CLASSES, _G.PETS)--CONSOLIDATE_BUFFS_TEXT)
 		tooltip:AddSeparator()
 		--tooltip:AddLine(" ")
 
-		local buffmask = GetRaidBuffInfo() or 0
+		local buffmask = _G.GetRaidBuffInfo() or 0
 		local mask = 1
-		for i = 1, NUM_LE_RAID_BUFF_TYPES do
-			local name, rank, texture, duration, expiration, spellId, slot = GetRaidBuffTrayAuraInfo(i)
+		for i = 1, _G.NUM_LE_RAID_BUFF_TYPES do
+			local name, rank, texture, duration, expiration, spellId, slot = _G.GetRaidBuffTrayAuraInfo(i)
 			local c
 
 			if name then
@@ -172,11 +176,11 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 
 	OnClick = function(button)
 		local missing = ""
-		local buffmask = GetRaidBuffInfo() or 0
+		local buffmask = _G.GetRaidBuffInfo() or 0
 		local mask = 1
 
-		for i = 1, NUM_LE_RAID_BUFF_TYPES do
-			if not GetRaidBuffTrayAuraInfo(i) and bit.band(buffmask, mask) > 0 then
+		for i = 1, _G.NUM_LE_RAID_BUFF_TYPES do
+			if not _G.GetRaidBuffTrayAuraInfo(i) and bit.band(buffmask, mask) > 0 then
 				missing = missing .. _G["RAID_BUFF_"..i]:gsub("-\n", "") ..", "
 			end
 			mask = bit.lshift(mask, 1)
@@ -184,14 +188,14 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 
 		if missing ~= "" then
 			local channel = "SAY"
-			if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+			if _G.IsInGroup(_G.LE_PARTY_CATEGORY_INSTANCE) then
 				channel = "INSTANCE_CHAT"
-			elseif IsInRaid() then
+			elseif _G.IsInRaid() then
 				channel = "RAID"
-			elseif IsInGroup() then
+			elseif _G.IsInGroup() then
 				channel = "PARTY"
 			end
-			SendChatMessage(ADDON_MISSING..": "..strsub(missing, 0, strlen(missing)-2), channel)
+			_G.SendChatMessage(_G.ADDON_MISSING..": "..strsub(missing, 0, strlen(missing)-2), channel)
 		end
 	end
 })
@@ -200,13 +204,13 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 local function updateBuffs(self, event, unitID)
 	if (unitID == "player" or event == "PLAYER_ENTERING_WORLD") then
 		local c = 0
-		for i = 1, NUM_LE_RAID_BUFF_TYPES do
-			if GetRaidBuffTrayAuraInfo(i) then
+		for i = 1, _G.NUM_LE_RAID_BUFF_TYPES do
+			if _G.GetRaidBuffTrayAuraInfo(i) then
 				c = c + 1
 			end
 		end
 
-		local buffcount = select(2, GetRaidBuffInfo())
+		local buffcount = select(2, _G.GetRaidBuffInfo())
 
 		BrokerConsolidatedBuffs.text  = c.."/"..max(c, buffcount)
 		BrokerConsolidatedBuffs.value = c.."/"..max(c, buffcount) -- for ElvUI datatexts
