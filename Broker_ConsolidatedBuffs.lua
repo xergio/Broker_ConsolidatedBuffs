@@ -128,19 +128,21 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 		tooltip:AddSeparator()
 		--tooltip:AddLine(" ")
 
+		-- http://wowprogramming.com/utils/xmlbrowser/live/FrameXML/BuffFrame.lua
 		local buffmask = _G.GetRaidBuffInfo() or 0
 		local mask = 1
+
 		for i = 1, _G.NUM_LE_RAID_BUFF_TYPES do
 			local name, rank, texture, duration, expiration, spellId, slot = _G.GetRaidBuffTrayAuraInfo(i)
 			local c
 
 			if name then
-				c = "FF00FF00"
+				c = "00FF00"
 			else
 				if bit.band(buffmask, mask) > 0 then
-					c = "FFFF0000"
+					c = "FF0000"
 				else
-					c = "FF888888"
+					c = "888888"
 				end
 			end
 
@@ -153,14 +155,10 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 				pets = pets ..", ".. defaults[i][3][ii]
 			end
 			tooltip:AddLine(
-				"\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i]:gsub("-\n", "").."\124r",
+				"\124T"..defaults[i][1]..":0\124t  \124cFF"..c.._G["RAID_BUFF_"..i]:gsub("-\n", "").."\124r",
 				strsub(classes, 2),
 				strsub(pets, 2)
 			)
-			--tooltip:AddLine(" ")
-
-			--tooltip:AddLine("\124T"..defaults[i][1]..":0\124t  \124c"..c.._G["RAID_BUFF_"..i]:gsub("-\n", "").."\124r  "..list)
-			--tooltip:AddLine("     "..list)
 
 			mask = bit.lshift(mask, 1)
 		end
@@ -176,26 +174,36 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 
 	OnClick = function(button)
 		local missing = ""
+		local unavailable = ""
 		local buffmask = _G.GetRaidBuffInfo() or 0
 		local mask = 1
 
 		for i = 1, _G.NUM_LE_RAID_BUFF_TYPES do
-			if not _G.GetRaidBuffTrayAuraInfo(i) and bit.band(buffmask, mask) > 0 then
-				missing = missing .. _G["RAID_BUFF_"..i]:gsub("-\n", "") ..", "
+			if not _G.GetRaidBuffTrayAuraInfo(i) then
+				if bit.band(buffmask, mask) > 0 then
+					missing = missing .. _G["RAID_BUFF_"..i]:gsub("-\n", "") ..", "
+				else
+					unavailable = unavailable .. _G["RAID_BUFF_"..i]:gsub("-\n", "") ..", "
+				end
 			end
 			mask = bit.lshift(mask, 1)
 		end
 
+		local channel = "SAY"
+		if _G.IsInGroup(_G.LE_PARTY_CATEGORY_INSTANCE) then
+			channel = "INSTANCE_CHAT"
+		elseif _G.IsInRaid() then
+			channel = "RAID"
+		elseif _G.IsInGroup() then
+			channel = "PARTY"
+		end
+
 		if missing ~= "" then
-			local channel = "SAY"
-			if _G.IsInGroup(_G.LE_PARTY_CATEGORY_INSTANCE) then
-				channel = "INSTANCE_CHAT"
-			elseif _G.IsInRaid() then
-				channel = "RAID"
-			elseif _G.IsInGroup() then
-				channel = "PARTY"
-			end
 			_G.SendChatMessage(_G.ADDON_MISSING..": "..strsub(missing, 0, strlen(missing)-2), channel)
+		end
+
+		if unavailable ~= "" then
+			_G.SendChatMessage(_G.UNAVAILABLE..": "..strsub(unavailable, 0, strlen(unavailable)-2), channel)
 		end
 	end
 })
@@ -210,10 +218,17 @@ local function updateBuffs(self, event, unitID)
 			end
 		end
 
-		local buffcount = select(2, _G.GetRaidBuffInfo())
+		-- I'm gona keep the old code here. Becouse there is an issue with GetRaidBuffInfo()+versatility
+		--and sometimes can appear 2/2 with 1 buff missing
+		-- For example a party of Hunter+Druid. Hunter > AP, Druid > Stats+Vers. GRBI() report only Stats and AP.
+		-- IMO is better to show 2/9 than 2/2 in this cases.
+		--local buffcount = select(2, _G.GetRaidBuffInfo())
+		--BrokerConsolidatedBuffs.text  = c.."/"..max(c, buffcount)
+		--BrokerConsolidatedBuffs.value = c.."/"..max(c, buffcount) -- for ElvUI datatexts
 
-		BrokerConsolidatedBuffs.text  = c.."/"..max(c, buffcount)
-		BrokerConsolidatedBuffs.value = c.."/"..max(c, buffcount) -- for ElvUI datatexts
+		-- old code, to be replaced by ^^^^^
+		BrokerConsolidatedBuffs.text  = c.."/"..NUM_LE_RAID_BUFF_TYPES
+		BrokerConsolidatedBuffs.value = c.."/"..NUM_LE_RAID_BUFF_TYPES -- for ElvUI datatexts
 	end
 end
 
