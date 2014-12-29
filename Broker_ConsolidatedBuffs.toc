@@ -2,7 +2,7 @@
 ## Title: Broker_ConsolidatedBuffs
 ## Notes: Track consolidated buffs
 ## Author: Gio
-## Version: 0.8
+## Version: 0.9
 ## SavedVariables: 
 
 libs\LibStub\LibStub.lua
@@ -20,3 +20,6 @@ Broker_ConsolidatedBuffs.lua
 # http://sethcoder.com/reference/wow/INTERFACE/BUTTONS/
 # http://www.curse.com/addons/wow/libbabble-talenttree-3-0
 # http://www.curse.com/addons/wow/libbabble-creaturetype-3-0
+
+# Thanks to:
+#  Dairyman (https://github.com/Dairyman)
