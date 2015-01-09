@@ -106,8 +106,25 @@ local defaults = { -- http://www.wowhead.com/guide=1100/buffs-and-debuffs
 	}
 }
 
+
 local function classColorLocalized(color, spec)
 	return "\124c".. color..spec.."\124r"
+end
+
+
+local function getCasterName(buffName)
+	local unitCaster = select(8, _G.UnitBuff("player", buffName) )
+	if unitCaster then
+		-- Do we want translate the name of the player to "you"?
+
+		-- Will add FOREIGN_SERVER_LABEL to the name if the player is from a other server. Connected Realms do not get the label
+		-- if this is a problem change false to true, then all player not on your server will return as "Name-Realm"
+		return _G.GetUnitName(unitCaster, true)
+	else
+		-- We can improve this *else* with this code from Dairyman: https://github.com/Dairyman/Broker_ConsolidatedBuffs/blob/who_cast_it_extra_column/Broker_ConsolidatedBuffs.lua#L113
+		-- For now, I prefer to show something different indicating the unknown source of the buff.
+		return _G.NOT_APPLICABLE
+	end
 end
 
 
@@ -119,12 +136,13 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 	label = "ConsolidatedBuffs",
 
 	OnEnter = function(self)
-		local tooltip = LQT:Acquire("Broker_ConsolidatedBuffsTooltip", 3, "LEFT", "LEFT", "LEFT")
+		local tooltip = LQT:Acquire("Broker_ConsolidatedBuffsTooltip", 4, "LEFT", "LEFT", "LEFT", "LEFT")
 		self.tooltip  = tooltip
 
-		tooltip:AddHeader(_G.CONSOLIDATE_BUFFS_TEXT)
+		local line = tooltip:AddHeader() -- Create an empty line
+		tooltip:SetCell(line, 1, _G.CONSOLIDATE_BUFFS_TEXT, tooltip.headerFont, "LEFT", #tooltip.columns) -- Set value and change the col-span to the full tooltip width
 		tooltip:AddLine(" ")
-		tooltip:AddHeader(_G.STATISTICS, _G.ALL_CLASSES, _G.PETS)--CONSOLIDATE_BUFFS_TEXT)
+		tooltip:AddHeader(_G.STATISTICS, " ", _G.ALL_CLASSES, _G.PETS)
 		tooltip:AddSeparator()
 		--tooltip:AddLine(" ")
 
@@ -134,10 +152,11 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 
 		for i = 1, _G.NUM_LE_RAID_BUFF_TYPES do
 			local name, rank, texture, duration, expiration, spellId, slot = _G.GetRaidBuffTrayAuraInfo(i)
-			local c
+			local c, who
 
 			if name then
 				c = "00FF00"
+				who = getCasterName(name)
 			else
 				if bit.band(buffmask, mask) > 0 then
 					c = "FF0000"
@@ -156,6 +175,7 @@ local BrokerConsolidatedBuffs = LDB:NewDataObject("Broker_ConsolidatedBuffs", {
 			end
 			tooltip:AddLine(
 				"\124T"..defaults[i][1]..":0\124t  \124cFF"..c.._G["RAID_BUFF_"..i]:gsub("-\n", "").."\124r",
+				who or "",
 				strsub(classes, 2),
 				strsub(pets, 2)
 			)
